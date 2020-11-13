@@ -1,13 +1,9 @@
-
 package com.myproject.estore.controller;
 
 import java.util.Optional;
 
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,27 +12,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.myproject.estore.dto.Auth;
 import com.myproject.estore.dto.AuthEntity;
-import com.myproject.estore.dto.Role;
-import com.myproject.estore.dto.User;
-import com.myproject.estore.service.UserService;
+import com.myproject.estore.dto.Shop;
+import com.myproject.estore.service.ShopService;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/user/")
+@RequestMapping("shop")
 @RequiredArgsConstructor
-public class UserController {
+public class ShopController {
+	private final ShopService sService;
+	private final PasswordEncoder pwEncoder;
 	
-	//@RequiredArgsConstructor + final = @Autowired
-	private final UserService uService;
-	
-	
- 
-	//추가
+	//shop 추가
 	@PostMapping("insert")
-	public String join(User user, AuthEntity auth) {
+	public String join(Shop shop, AuthEntity auth) {
+		String rawPassword = shop.getPassword();
+		System.out.println("인코딩 전 비밀번호 : "+rawPassword);
+		String encPassword = pwEncoder.encode(rawPassword);
+		System.out.println("인코딩 후 비밀번호 : "+encPassword);
 		
-		uService.save(user, auth);		
+		sService.save(shop, auth);
 		return "loginform";
 	}
 	
@@ -44,13 +40,12 @@ public class UserController {
 	@PostMapping("emailCheck")
 	@ResponseBody
 	public String emailCheck(HttpServletRequest request, String email) {
-		User user = uService.EmailCheck(email);
+		Shop shop = sService.EmailCheck(email);
 		String result="";
 		
-		if(user!=null) result="no";
+		if(shop!=null) result="no";
 		else result="yes";
 		return result;		
 	}
-	
 	
 }

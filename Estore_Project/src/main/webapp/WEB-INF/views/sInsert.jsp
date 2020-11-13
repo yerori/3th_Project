@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@include file ="/WEB-INF/views/include/header.jsp" %> 
+<%@include file ="/WEB-INF/views/include/header.jsp" %> 
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html>
@@ -17,12 +19,12 @@
  </style>
 <body>
 <div class="container">
-<form action="/user/join" method="post" id="frm">
+<form action="/shop/insert" method="post" id="frm">
 
   <div class="row">
     <div class="col">
     <label for="userid">Email : </label>
-    <input type="text" class="form-control" placeholder="Enter Email" id="username" name="username">
+    <input type="text" class="form-control" placeholder="Enter Email" id="email" name="email">
  	</div> 
  	<div class="col align-self-end">
   	<button type="button" id="email_checkBtn" class="btn_3" name="email_checkBtn">Email Check</button>  	
@@ -38,12 +40,16 @@
     <input type="text" class="form-control" placeholder="Enter name" id="name" name="name" size="20">
   </div>
    <br>
+   <div class="form-group">
+    <label for="name">STORE NAME : </label>
+    <input type="text" class="form-control" placeholder="Enter name" id="sname" name="sname" size="20">
+  </div>
+  <br>
     <div class="form-group">
     <label for="pwd_check">Password : </label>
     <input type="password" class="form-control" placeholder="Enter password" id="password" name="password">
   </div>
   
- <br>
  <div class="row">
     <div class="col">
     <label for="pwd">Password Confirm : </label>
@@ -57,14 +63,26 @@
   <div>
  	<span id="pwcheck"></span>
  	</div>
-  <br>
- 
-  <br>
-   <div class="form-group">
-    <label for="addr">ADDR :  </label>
-     <input type="text" class="form-control" placeholder="Enter address" id="addr" name="addr" size=20>
-    
+ 	<br>
+ 	
+ 	 <div class="row">
+    <div class="col">
+    <label for="pwd">Address : </label>
+    <input type="text" class="form-control" placeholder="Enter Address" id="zipcode" name="zipcode" readonly="readonly">
+ 	</div> 
+ 	<div class="col align-self-end">
+  	<button type="button" class="btn_3" id="addr_checkBtn"><i class="fa fa-search"></i> 우편번호 찾기</button> 	
+  	</div>
   </div>
+  <br> 	
+	<div class="form-group">
+	    <input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="addr" id="addr" type="text" readonly="readonly" />
+	</div>
+	
+	<div class="form-group">
+	    <input class="form-control" placeholder="상세주소" name="addr2" id="addr2" type="text"  />
+	</div>
+ 	
   <br>
   <div class="form-group">
     <label for="phone">Phone : </label>
@@ -75,9 +93,10 @@
 
   <button type="button" id="joinBtn" class="btn_3">JOIN</button>
   <Br>
-  <script src="/assets/js/user/user.js"></script>
+  <script src="/assets/js/user/insert.js"></script>
+  
 </form>
   </div>
-  
+   <%@include file ="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>

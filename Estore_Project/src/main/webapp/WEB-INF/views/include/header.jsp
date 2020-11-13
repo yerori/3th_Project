@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 
-<html class="no-js" lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html class="no-js" lang="en">
  <script src="//code.jquery.com/jquery-latest.min.js"></script>
     <head>
         <meta charset="utf-8">
@@ -80,7 +80,7 @@
                                        <li><a href="cart.html">Cart</a></li>
                                        <li><a href="checkout.html">Checkout</a></li>
                                        <li><a href="/estore/product/productInsert">Add Item</a></li>
-                                       <li><a href="/logout">Logout</a></li>
+                                       <li><sec:authorize access="hasRole('ROLE_MANAGER')"><a href="/admin">Logout</a></sec:authorize></li>
                                    </ul>
                                 </div>
                             </div>
@@ -146,17 +146,25 @@
                                             <i class="far fa-heart"></i>
                                         </div>
                                     </li>
+                                    
                                     <li>
                                         <div class="shopping-card">
-                                            <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+                                            <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
                                         </div>
                                     </li>
-                                  	  <li class="d-none d-lg-block">
-                                  	  <sec:authorize access="isAnonymous()"> <a href="/loginform" class="btn header-btn">Sign in</a></sec:authorize></li>
-                              
-                                  	  <li class="d-none d-lg-block"> 
-                                  	  <sec:authorize access="isAuthenticated()"> <a href="/logout" class="btn header-btn">Sign out</a></sec:authorize></li>
-                                 
+                              		<c:choose>
+ 	    							  <c:when test="${empty sessionScope.user }">                                        
+	                                  	  <li class="d-none d-lg-block">
+	                                  	    <a href="/loginform" class="btn header-btn">Sign in</a>
+	                                  	  </li>
+                                  	  </c:when>
+                                  	  
+                              		  <c:otherwise>
+	                                  	  <li class="d-none d-lg-block"> 
+	                                  	    <a href="/logout" class="btn header-btn">Sign out</a>
+	                                  	  </li>
+                                  	  </c:otherwise>
+                                 	</c:choose>
                                 </ul>
                             </div>
                             <!-- Mobile Menu -->

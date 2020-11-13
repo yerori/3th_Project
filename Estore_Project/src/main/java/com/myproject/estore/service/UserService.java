@@ -1,23 +1,19 @@
 package com.myproject.estore.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.myproject.estore.config.auth.dto.SessionUser;
+import com.myproject.estore.dto.Auth;
+import com.myproject.estore.dto.AuthEntity;
 import com.myproject.estore.dto.Role;
 import com.myproject.estore.dto.User;
+import com.myproject.estore.repository.AuthRepository;
 import com.myproject.estore.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -26,51 +22,44 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+	
 	private final UserRepository uRepository;
+	private final AuthRepository aRepository;
+	@Autowired
+	private PasswordEncoder pwEncoder;
+	
+	//회원 추가
+	@Transactional
+	public void save(User user, AuthEntity auth) {
+		user.setRole(Role.USER);
+		//암호화 전
+		String rawpassword = user.getPassword();		
+		//암호화 후
+		String encodepassword = pwEncoder.encode(rawpassword);
+		
+		user.setPassword(encodepassword);
+		System.out.println("encodepassword : "+encodepassword);
+		System.out.println("email : "+user.getEmail());
+		AuthEntity.builder()
+			.email(user.getEmail())
+			.password(encodepassword)
+	        .role(user.getRole())
+	        .build();
+		
+		aRepository.save(auth);
+		System.out.println("encodepassword : "+encodepassword);
+		uRepository.save(user);
+	}
 	
 	public List<User> findAllDesc(){
 		return uRepository.findAll();
 	}
 	
-	public User EmailCheck(String username) {
-		System.out.println(uRepository.findByemail(username));
-		User user = uRepository.findByemail(username);
+	public User EmailCheck(String email) {
+		System.out.println(uRepository.findByemail(email));
+		User user = uRepository.findByemail(email);
 		return user;
 		
 	}
-	
-	//회원 추가
-	@Transactional
-	public void save(User user) {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		
-		uRepository.save(user);
-	}
-
-	
-//	@Override
-//	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//		Optional<User> userEntity = uRepository.findByEmail(email);
-//		User user = userEntity.get();
-//			
-//		//롤 부여하기
-//	    List<GrantedAuthority> authorities = new ArrayList<>();
-//
-//        if (user.getRole().equals("ADMIN")) 
-//            authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
-//        else if (user.getRole().equals("MANAGER"))
-//            authorities.add(new SimpleGrantedAuthority(Role.MANAGER.getValue()));
-//        
-//        else if (user.getRole().equals("USER"))
-//        	authorities.add(new SimpleGrantedAuthority(Role.USER.getValue()));
-//        
-//	        
-//		return new org.springframework.security.core.userdetails.User
-//				(user.getEmail(), user.getPassword(), authorities);
-//	}
-	
-	
-	
-	
+			
 }

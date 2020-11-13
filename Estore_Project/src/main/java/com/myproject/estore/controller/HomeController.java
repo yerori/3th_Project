@@ -39,9 +39,27 @@ public class HomeController {
        }
    }
    
-	//join form
-	@GetMapping("join")
-	public void join() {
+   //cart
+  	@GetMapping("cart")
+  	public void cart() {
+  		
+  	}
+   
+   //preinsert form
+ 	@GetMapping("preInsert")
+ 	public void preInsert() {
+ 		
+ 	}
+   
+	//user join form
+	@GetMapping("uInsert")
+	public void uInsert() {
+		
+	}
+	
+	//store join form
+	@GetMapping("sInsert")
+	public void sInsert() {
 		
 	}
 	

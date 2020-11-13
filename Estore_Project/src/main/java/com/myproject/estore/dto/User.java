@@ -19,20 +19,21 @@ import lombok.Setter;
 @NoArgsConstructor	//파라미터 없는 생성자 생성
 @Entity(name="user")
 public class User  {
-	 @Id
-	   @GeneratedValue(strategy = GenerationType.IDENTITY)
-	   private Long id;
-	
+	   @Id
+	   private String email;
+	 
 	   @Column(nullable = false)
 	   private String name;
 	   @Column
 	   private String password;
 
-	   @Column(nullable = false)
-	   private String email;
+	   
 	   
 	   @Column
 	   private String addr;
+	   
+	   @Column
+	   private String zipcode;
 	   
 	   @Column
 	   private String picture;
