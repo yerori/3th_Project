@@ -9,13 +9,13 @@ width:100%;
 
 </style>
  <script>
-function ndelete(nnum){
-	if(confirm(nnum+"번째 게시글을 삭제하시겠습니까?")){
-		$.get("/notice/delete", {"nnum" : nnum},
+function sDelete(email, sname){
+	if(confirm(sname+"이란 Shop을 삭제하시겠습니까?")){
+		$.get("/admin/sDelete", {"email" : email},
 			function (resp){
 				if(resp=="success")
 					alert("삭제 되었습니다.");
-						location.href="/notice/list";
+						location.href="/admin/sInfo";
 			}
 		)
 	}
@@ -27,28 +27,22 @@ function ndelete(nnum){
       <div class="container">
           <div class="row justify-content-center">
               <div class="about_us_content">
-                  <h5>Notice Num : ${notice.nnum }</h5>
-                 <h3>${notice.title }</h3>
-                 <div class="single_product_img">
-                      <img src="/resources/upload/notice/${notice.nimg }" alt="#" class="img-fluid">
-                     	<p>${notice.content}</p>
-                 </div>
+                  <h5>Shop Seller : ${shop.name }</h5>
+                 <h3>Shop Name : ${shop.email }</h3>
+                 <p>Shop Address : ${shop.addr }</p>
+                 <p>Shop Phone : ${shop.phone }</p>
              </div>                            
           </div>
-          <sec:authorize access="hasRole('ROLE_ADMIN')">
           <section class="button-area">
 			<div class="container box_1170 border-top-generic" align="center">
 				<div class="button-group-area">
-					<a href="/notice/update/${notice.nnum}" class="genric-btn primary">Update</a>
-					<a href="javascript:ndelete(${notice.nnum })" class="genric-btn primary">Delete</a>
+					<a href="javascript:sDelete('${shop.email }', '${shop.sname }')" class="genric-btn primary">Delete</a>
 				</div>			
 			</div>
 		</section>
-		</sec:authorize>
 	</div>  
 </section>
   
- 
 
  
  

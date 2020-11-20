@@ -2,6 +2,7 @@ package com.myproject.estore.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -11,6 +12,7 @@ import com.myproject.estore.dto.CartDTO;
 import com.myproject.estore.dto.OrderDTO;
 import com.myproject.estore.dto.ProductDTO;
 import com.myproject.estore.dto.ReviewDTO;
+import com.myproject.estore.dto.Shop;
 
 @Repository
 @Mapper
@@ -46,5 +48,8 @@ public interface ShopMapper {
 	@Select("select count(*) from ordering where sid=#{sid} "
 			+ "and DATE_FORMAT(create_date, '%Y-%m-%d') = CURDATE()")
 	public int newOcount(String sid);
+	
+	@Delete("delete from shop where email=#{email}")
+	public void sDelete(String email);
 	
 }

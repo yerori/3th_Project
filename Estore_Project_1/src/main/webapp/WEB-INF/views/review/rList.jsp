@@ -39,16 +39,9 @@ a:hover {color:blue; text-decoration: underline; }
 		<tbody>
 			<c:forEach items="${rlist }" var="list">
 				<tr>
-				<sec:authentication property="principal.username" var="userName" />	
-				<c:if test="${userName==list.email }">
 					<td align="center">${list.rnum }</td>
 					<td align="center"><a href ='/review/detail/${list.rnum }/${list.pnum}'>${list.title }</a></td>	
 					<td align="center"><c:forEach var="rating" items="${ratingOptions}" varStatus="status" begin="1" end="${list.rate}" >★</c:forEach></td>					
-				</c:if>
-				<c:if test="${userName!=list.email }">
-					<td align="center">${list.rnum }</td> 
-					<td align="center">접근 권한이 없는 게시글입니다.</td> 
-				</c:if>
 				</tr>
 			</c:forEach>   
 	  	</tbody>

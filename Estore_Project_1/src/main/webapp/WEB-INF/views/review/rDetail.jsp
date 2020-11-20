@@ -59,12 +59,15 @@ function rdelete(rnum){
               
         </div>     
 	<br>
-		<div class="button-group-area">
-			<a href="/review/update/${review.rnum}" class="genric-btn primary">Update</a>
-			<a href="javascript:rdelete(${review.rnum })" class="genric-btn primary">Delete</a>
-					
-	</div>
- </div> 
- 
+	<sec:authorize access="isAuthenticated()"> 
+		 <sec:authentication property="principal.username" var="userName" />
+			<c:if test="${userName==list.email }"> --%>
+			<div class="button-group-area">
+				<a href="/review/update/${review.rnum}" class="genric-btn primary">Update</a>
+				<a href="javascript:rdelete(${review.rnum })" class="genric-btn primary">Delete</a>
+				</div>
+			</c:if>
+	</sec:authorize>
+</div> 
  
 <%@include file ="/WEB-INF/views/include/footer.jsp" %>

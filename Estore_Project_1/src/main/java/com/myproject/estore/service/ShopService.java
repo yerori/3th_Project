@@ -122,5 +122,10 @@ public class ShopService {
 		aRepository.save(authEntity);
 		sRepository.save(shop);
 	}
+	
+	//삭제
+	public void sDelete(String email) {
+		sMapper.sDelete(email);
+	}
 
 }

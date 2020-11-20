@@ -30,8 +30,12 @@ public class CartController {
 	//추가
 	@PostMapping("cartInsert")
 	@ResponseBody
-	public String cartInsert(@RequestBody CartDTO cart) {
+	public String cartInsert(@RequestBody CartDTO cart, Principal p) {
+		String userid= p.getName();
+		cart.setUserid(userid);
+		System.out.println("cart user id : "+userid);
 		cSerivce.cartInsert(cart);
+		
 		return "success";
 	}
 	

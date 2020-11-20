@@ -2,8 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@include file ="/WEB-INF/views/include/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+#delBtn{
+	color:red;
+	font-weight:bold;
+}
 
-
+</style>
+ <script src="//code.jquery.com/jquery-latest.min.js"></script>
         <!-- slider Area Start-->
         <div class="slider-area ">
             <!-- Mobile Menu -->
@@ -86,7 +92,7 @@
                                             </ul>
                                             <input type="hidden" id="pnum" name="pnum" value="${list.pnum}">
                                 		    <input type="hidden" id="ptype" name="ptype" value="${list.ptype}">
-                                 
+                                 			
                                         </div>
                                     </div>
                                 </div>
@@ -132,6 +138,7 @@
                 </div>
             </div>
         </div>
+     
      
  <%@include file ="/WEB-INF/views/include/footer.jsp" %>
                

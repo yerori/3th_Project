@@ -19,4 +19,6 @@ public interface QnAService {
 	public List<QnADTO> qfindByPnum(int pnum);
 	//오늘 개수
 	public int qnaCount();
+	//댓글 없는 게시글 수
+	public int noReply();
 }

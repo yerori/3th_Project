@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.myproject.estore.dto.Auth;
 import com.myproject.estore.dto.AuthEntity;
 import com.myproject.estore.dto.OrderDTO;
+import com.myproject.estore.dto.QnADTO;
 import com.myproject.estore.dto.Role;
 import com.myproject.estore.dto.User;
 import com.myproject.estore.service.AuthService;
@@ -121,6 +122,21 @@ public class UserController {
 		model.addAttribute("uInfo",user);
 		return "/user/uMyinfo";
 	}	
+	
+	//userQnA
+	@GetMapping("uQnA")
+	public String uQnA(Principal principal, Model model) {
+		String umail = principal.getName();
+		List<QnADTO> list = uService.uQlist(umail);
+		model.addAttribute("qList", list);
+		return "/user/uQnA";
+	}
+	
+	//Qdetail
+	@GetMapping("uQdetail/{qnum}")
+	public String uQdetail(Model model, @PathVariable int qnum ) {
+		return "/user/uQdetail";
+	}
 	
 	
 }

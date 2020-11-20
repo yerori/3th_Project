@@ -47,6 +47,7 @@ a:hover {color:blue; text-decoration: underline; }
 			</c:forEach>        
 	  </tbody>
 	</table>
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
 	<section class="button-area">
 		<div class="container box_1170 border-top-generic">
 			<div class="button-group-area">
@@ -54,9 +55,7 @@ a:hover {color:blue; text-decoration: underline; }
 			</div>			
 		</div>
 	</section>
-	<%-- 	<sec:authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
-			<a href="notice/insert">Write notice</a>
-		</sec:authorize>   --%>
+	</sec:authorize> 
 </div> 
 
 

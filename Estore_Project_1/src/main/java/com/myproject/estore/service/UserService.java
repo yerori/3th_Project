@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.myproject.estore.dto.Auth;
 import com.myproject.estore.dto.AuthEntity;
 import com.myproject.estore.dto.OrderDTO;
+import com.myproject.estore.dto.QnADTO;
 import com.myproject.estore.dto.Role;
 import com.myproject.estore.dto.User;
 import com.myproject.estore.mapper.UserMapper;
@@ -114,6 +115,11 @@ public class UserService {
 	//order상세보기 - 제품 리스트
 	public List<OrderDTO> uOdetailList(String uid, String ordernum){
 		return uMapper.uOdetailList(uid, ordernum);
+	}
+	
+	//qna작성 보기
+	public List<QnADTO> uQlist(String email){
+		return uMapper.uQList(email);
 	}
 	
 }

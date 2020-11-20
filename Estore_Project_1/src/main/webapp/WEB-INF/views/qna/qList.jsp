@@ -34,32 +34,35 @@ a:hover {color:blue; text-decoration: underline; }
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${qlist }" var="list">
-				<tr>
-				<sec:authentication property="principal.username" var="userName" />	
-				<c:if test="${userName==list.email }">				
+		<c:forEach items="${qlist }" var="list">
+		<sec:authorize access="isAuthenticated()"> 
+	 	 <sec:authentication property="principal.username" var="userName" />	  
+			
+				<tr>				
+				 <c:if test="${userName==list.email }">			
 					<td align="center">${list.qnum }</td>
-					<td align="center"><a href ='/qna/detail/${list.qnum }'>
+					<td align="center"><a href ='/qna/detail/${list.qnum }' id="detail">
 					<c:out value="${list.title }"/>
 					<b> [<c:out value="${list.replyCnt }"/>]</b>
 					</a></td>	
 					<td align="center">${list.create_date }</td>
-				</c:if>
-				<c:if test="${userName!=list.email }">
-					<td align="center" colspan="3">접근 권한이 없는 게시글입니다.</td> 
-				</c:if>
+				 </c:if> 
+				 </tr>
+		</sec:authorize>
+		<sec:authorize access=" isAnonymous()">
+		
+				<tr>
+			 	<c:if test="${userName!=list.email }"> 
+					 <td align="center" colspan="3">접근 권한이 없는 게시글입니다.</td>  
+				 </c:if>
 				</tr>
-			</c:forEach>   
+				</sec:authorize>
+			</c:forEach> 		
 	  	</tbody>
 	</table>
 </div>	  
 		
 	
-	
-	<%-- 	<sec:authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
-			<a href="notice/insert">Write notice</a>
-		</sec:authorize>   --%>
- 
 
 
  <%@include file ="/WEB-INF/views/include/footer.jsp" %>

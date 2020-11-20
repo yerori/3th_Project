@@ -98,12 +98,12 @@
                                 </div>
                                 <div class="header-info-right">
                                    <ul>
-                                    	   <li>
+                                    	  <%--  <li>
 		                                   	<sec:authorize access="isAuthenticated()">
 												<span id="welcom"><a>Welcome! <sec:authentication property="principal.username"/></a></span>
 											</sec:authorize>
                                    	   
-                                   	   </li>  
+                                   	   </li>  --%> 
                                    	                                          
                                        <sec:authorize access="hasRole('ROLE_USER') and isAuthenticated()">
 												<li><a href="/user/mypage">My Page</a></li>   
@@ -155,7 +155,7 @@
                                         <ul id="navigation">                                                                                                                                     
                                             <li><a href="/">Home</a></li>
                                             
-                                            <li><a href="#">About Us</a></li>
+                                            <li><a href="/about">About Us</a></li>
                                             
                                             <li><a href="/product/productList">Category</a>
                                             
@@ -177,7 +177,7 @@
 	                                                 <li><a href="/review/list">Review</a></li>
 	                                            </ul>
          
-                                            <li><a href="/contact">Contact</a></li>
+                                             <li><a href="/contact/form">Contact</a></li> 
                                         </ul>
                                     </nav>
                                 </div>

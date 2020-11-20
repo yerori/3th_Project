@@ -58,7 +58,7 @@ a:hover {
           <input type="hidden" name="sid" id="sid" value="${product.sid }">
             <input type="hidden" name="sname" id="sname" value="${product.sname }">
             <input type="hidden" name="pnum" id="pnum" value="${product.pnum }">
-             <input type="hidden" name="userid" id="userid" value="<sec:authentication property='principal.username'/>">
+            <%--  <input type="hidden" name="userid" id="userid" value="<sec:authentication property='principal.username'/>"> --%>
             <h3>${product.pname }</h3>
             <p>${product.pdetail }</p>
             <div class="card_area">
@@ -84,15 +84,31 @@ a:hover {
                 </div>
               <div class="add_to_cart">
               	  <!-- 비회원/회원 장바구니 보이게  -->
-                  <input type="button" value="장바구니" class="btn_3" id="btnAddCart"
-                  onclick="javascript:addCart('${product.pname }','${product.price }', '${product.sid }')">
+              	  <sec:authorize access="isAuthenticated()"> 
+              	  <sec:authorize  access="hasRole('ROLE_USER')">                	  
+	                  <input type="button" value="장바구니" class="btn_3" id="btnAddCart"
+	                  onclick="javascript:addCart('${product.pname }','${product.price }', '${product.sid }')">
+                  </sec:authorize>
                   
-                  <!-- 판매자만 보이게 -->
-                  <input type="button" value="수정하기" class="genric-btn success-border radius" 
-                  onclick="location.href='/product/productUpdate?pnum=${product.pnum}'">
-                  <input type="button" value="삭제하기" class="genric-btn danger-border radius"
-                  onclick="location.href='/product/productDelete?pnum=${product.pnum }'">
-                                    
+                  <sec:authentication property="principal.username" var="userName" />
+                   <sec:authorize access="hasRole('ROLE_MANAGER')"> 
+                    <c:if test="${userName==product.sid }">		 
+	                  <!-- 판매자만 보이게 -->
+	                  <input type="button" value="수정하기" class="genric-btn success-border radius" 
+	                  onclick="location.href='/product/productUpdate?pnum=${product.pnum}'">
+	                  <input type="button" value="삭제하기" class="genric-btn danger-border radius"
+	                  onclick="location.href='/product/productDelete?pnum=${product.pnum }'">
+	                 </c:if> 
+	                 <div>
+	                 <sec:authorize access="hasRole('ROLE_ADMIN')"> 
+	                  <input type="button" value="수정하기" class="genric-btn success-border radius" 
+	                  onclick="location.href='/product/productUpdate?pnum=${product.pnum}'">
+	                  <input type="button" value="삭제하기" class="genric-btn danger-border radius"
+	                  onclick="location.href='/product/productDelete?pnum=${product.pnum }'">
+	                  </sec:authorize>
+	                  </div>
+                  </sec:authorize>   
+                 </sec:authorize>            
               </div>
             </div>
           </div>
@@ -121,11 +137,11 @@ a:hover {
              </div>                
 		</div>	
 			
-			
-		<div class="button-group-area">
-			<Button type="button" id="qnaBtn" class="genric-btn success large">Write a QnA</Button>
-			<Button type="button" id="revBtn" class="genric-btn success large">Write a Review</Button>
-		</div>
+		<sec:authorize access="isAuthenticated()">  	
+			<div class="button-group-area" id="buttonarea">
+				<Button type="button" id="qnaBtn" class="genric-btn success large">Write a QnA</Button>
+			</div>
+		</sec:authorize>
 		<br>
 		<div id="listarea"></div>
 		<div id="insertarea"></div>
@@ -139,14 +155,12 @@ a:hover {
 //Qna
 $(document).ready(function(){
 	$("#qnaBtn").hide(); //qna버튼 숨기기
-	$("#revBtn").hide();
 })
 
 //추가하기 폼
 $("#qnaBtn").on("click",function(){
 	$("#listarea").hide();
 	$("#qnaBtn").hide();
-	$("#revBtn").hide();
 
 	var htmlStr = "";
 	htmlStr += "<div class='col-lg-8'>"
@@ -186,7 +200,7 @@ $("#qnaBtn").on("click",function(){
 		.done(function(success){
 			alert("QnA가 등록되었습니다.");
 			//★ 경로 설정하기
-			location.href="/";
+			location.href="/user/uQnA";
 		})
 
 		.fail(function(error){
@@ -199,7 +213,6 @@ $("#qnaBtn").on("click",function(){
 //qna 전체보기
 function qnaShowFunction(){
 	$("#qnaBtn").show(); //qna버튼 나타내기
-	$("#revBtn").hide();
 	
 	$.ajax({
 		type:"get",
@@ -221,7 +234,10 @@ function qnaShowFunction(){
 			htmlStr += "<tr>";
 			htmlStr += "<td>"+val.qnum+"</td>";
 			htmlStr += "<td>"+afterStr[0]+"</td>";
-			htmlStr += "<td><a onclick='javascript:qnaViewFunction("+val.qnum+")' id='qnatitle'>"+val.title+"["+val.replyCnt+"]"+"</a></td>";
+			htmlStr += "<sec:authorize access='isAnonymous()'>" 
+			htmlStr += "<td>"+val.title+"</td>";
+			htmlStr += "</sec:authorize>";
+		//	htmlStr += "<td><a onclick='javascript:qnaViewFunction("+val.qnum+")' id='qnatitle'>"+val.title+"["+val.replyCnt+"]"+"</a></td>";
 			htmlStr += "<td>"+val.create_date+"</td>";
 			htmlStr += "</tr>";
 		});
@@ -239,18 +255,18 @@ function qnaShowFunction(){
 
 //상세보기
 function qnaViewFunction(qnum){
+	
 	//$("#viewarea").attr("tabindex", -1).focus(); //포커스 함수
 	location.href="/qna/pwform/"+qnum;
 }
 
 
-
+//버튼 시큐리티
 //리뷰
 
 //리뷰 전체보기
 function revShowFunction(){
 	$("#qnaBtn").hide(); //qna버튼 숨기기
-	$("#revBtn").show();
 	
 	$.ajax({
 		type:"get",
@@ -292,16 +308,10 @@ function revShowFunction(){
 } //list
 
 
-//리뷰 추가하기 버튼 누르면
-$("#revBtn").on("click",function(){
-	location.href="/user/mypage";
-})
 //카트
 function addCart(pname, price, sid){
-	alert(sid);
 	var data={
 		"pnum":$("#pnum").val(),
-		"userid":$("#userid").val(),
 		"pname":pname,
 		"price":price,
 		"count":$("#count").val(),

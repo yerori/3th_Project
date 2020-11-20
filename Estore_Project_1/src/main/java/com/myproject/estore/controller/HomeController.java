@@ -41,7 +41,10 @@ public class HomeController {
 		return "contact";
 	}
 	
-	
+	@GetMapping("/about")
+	public String aboutus() {
+		return "about";
+	}
 	
    @GetMapping("loginform")
    public void index(Model model) {

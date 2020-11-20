@@ -14,4 +14,8 @@ public class QnADTO {
 	private String email;
 	private String password;
 	private int replyCnt;
+	
+	//조인
+	private String pname;
+	private String sid;
 }

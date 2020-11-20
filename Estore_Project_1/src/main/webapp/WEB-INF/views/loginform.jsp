@@ -15,6 +15,10 @@
 	width:200px;
 	height:60px;
 }
+#naver{
+width:200px;
+	height:40px;
+}
 </style>
 <body>
 </body>
@@ -48,12 +52,13 @@
                                <div class="col-md-12 form-group">
                                    <div class="creat_account d-flex align-items-center">
                                        <input type="checkbox" id="f-option" name="selector">
-                                       <label for="f-option">Remember me</label>
+                                       
                                    </div>
                                	   <div align="right">
                                    <button type="submit" value="submit" class="btn_3" id="btn">
                                        log in
-                                   </button>
+                                   </button> 
+                                   <img src="/resources/button/green.PNG" onclick="location.href='/oauth2/authorization/naver'" id="naver">
                                    <img src="/resources/button/normal.png" onclick="location.href='/oauth2/authorization/google'" id="google">
                                    </div>
                                </div>                              

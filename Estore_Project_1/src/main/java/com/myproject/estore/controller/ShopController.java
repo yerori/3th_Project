@@ -22,6 +22,7 @@ import com.myproject.estore.dto.Auth;
 import com.myproject.estore.dto.AuthEntity;
 import com.myproject.estore.dto.OrderDTO;
 import com.myproject.estore.dto.ProductDTO;
+import com.myproject.estore.dto.QnADTO;
 import com.myproject.estore.dto.Shop;
 import com.myproject.estore.service.ShopService;
 
@@ -145,5 +146,6 @@ public class ShopController {
 		else result="yes";
 		return result;		
 	}
+	
 	
 }

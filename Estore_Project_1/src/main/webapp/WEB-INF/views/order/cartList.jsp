@@ -97,7 +97,6 @@
   <script>
 	function cDel(cnum, pname){
 		var num=cnum;
-		alert(num);
 		if(confirm(pname+"을(를) 장바구니에서 삭제하시겠습니까?")){
 			location.href="/cart/cDelete?cnum="+num;
 

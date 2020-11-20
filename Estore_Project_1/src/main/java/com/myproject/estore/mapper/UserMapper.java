@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.myproject.estore.dto.OrderDTO;
+import com.myproject.estore.dto.QnADTO;
 import com.myproject.estore.dto.User;
 
 @Repository
@@ -33,5 +34,7 @@ public interface UserMapper {
 	@Select("SELECT * FROM ordering WHERE create_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 MONTH ) AND NOW()")
 	public List<OrderDTO> uMonthList(String uid);
 	
+	//유저 qna리스트
+	public List<QnADTO> uQList(String uid);
 
 }

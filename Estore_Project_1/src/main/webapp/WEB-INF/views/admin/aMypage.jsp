@@ -76,7 +76,7 @@
                                  	<h4>New Review: ${rCount }</h4>
                                  </div>
                                  <div class="input-group mb-3">
-                                 	<h4>This Review: </h4>
+                                 	<h4>Total Review: ${rCount }</h4>
                                  </div>
                             </div>
     					</aside>

@@ -23,9 +23,9 @@
     <section class="feature_part section_padding">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-2 col-sm-5" onclick="location.href='/shop/shopInfo'" style="cursor:pointer">
+                <div class="col-lg-2 col-sm-5" onclick="location.href='/admin/sInfo'" style="cursor:pointer">
                     <div class="single_feature_part">
-                        <a href="#"><img src="/assets/img/icon/feature_icon_1.svg" alt="#"></a>
+                        <a href="/admin/sInfo"><img src="/assets/img/icon/feature_icon_1.svg" alt="#"></a>
                         <h4>All Shop</h4>
                     </div>
                 </div>
@@ -39,21 +39,21 @@
                 
                 <div class="col-lg-2 col-sm-5" onclick="location.href='/shop/shopProduct'" style="cursor:pointer">
                   <div class="single_feature_part">
-                        <img src="/assets/img/icon/feature_icon_2.svg" alt="#">
+                        <a href="/product/productList"><img src="/assets/img/icon/feature_icon_2.svg" alt="#"></a>
                         <h4>All Product</h4>
                     </div>
                 </div>
                 
                 <div class="col-lg-2 col-sm-5" onclick="location.href='/shop/shopQnA'" style="cursor:pointer">
                     <div class="single_feature_part">
-                        <img src="/assets/img/icon/icon_4.png" alt="#">
+                        <a href="/notice/list"><img src="/assets/img/icon/icon_4.png" alt="#"></a>
                         <h4>Notice</h4>
                     </div>                  
                 </div>
                 
                 <div class="col-lg-2 col-sm-5" onclick="location.href='/shop/shopReview'" style="cursor:pointer">
                     <div class="single_feature_part">
-                        <img src="/assets/img/icon/feature_icon_4.svg" alt="#">
+                        <a href="/contact/list"><img src="/assets/img/icon/feature_icon_4.svg" alt="#"></a>
                         <h4>Contact</h4>
                     </div>                  
                 </div>

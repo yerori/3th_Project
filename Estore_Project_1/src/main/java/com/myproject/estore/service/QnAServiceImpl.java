@@ -49,4 +49,9 @@ public class QnAServiceImpl implements QnAService {
 		return qMapper.qnaCount();
 	}
 
+	@Override
+	public int noReply() {
+		return qMapper.noReply();
+	}
+
 }

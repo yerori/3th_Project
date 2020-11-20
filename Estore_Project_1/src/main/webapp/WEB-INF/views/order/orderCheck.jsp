@@ -99,13 +99,7 @@
                   </a>
                 </li>
               </ul>
-
-              <div class="creat_account">
-                <input type="checkbox" id="f-option4" name="selector" />
-                <label for="f-option4">I read and accept the </label>
-                <a href="#">terms & conditions*</a>
-              </div>
-              <input type="submit" class="btn_3" id="btnOrder">Proceed to Paypal</a>
+              <input type="submit" class="btn_3" id="btnOrder" value="Proceed to Paypal">
             </div>       
           </div>
         </div>
