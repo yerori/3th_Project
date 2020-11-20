@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="com.myproject.estore.mapper.ReviewMapper">
+ 
+ 	<select id="rfindByPnum" parameterType="int" resultType="com.myproject.estore.dto.ReviewDTO">
+ 		select * from review where pnum=#{pnum}
+ 	</select>
+ 	
+ 	<select id="rfindByOnum" parameterType="int" resultType="com.myproject.estore.dto.ReviewDTO">
+ 		select * from review where onum=#{onum}
+ 	</select>
+ 	
+ 	<select id="rList" resultType="com.myproject.estore.dto.ReviewDTO">
+ 		select * from review
+ 	</select>
+ 	
+ 	<update id="rUpdate" parameterType="com.myproject.estore.dto.ReviewDTO">
+ 		update review set title=#{title}, content=#{content} where rnum=#{rnum}
+ 	</update>
+ 	
+ 	<delete id="rDelete" parameterType="int">
+ 		delete from review where rnum=#{rnum}
+ 	</delete>
+ 	
+ 	<select id="rDetail" parameterType="int" resultType="com.myproject.estore.dto.ReviewDTO">
+ 		select * from review where rnum=#{rnum}
+ 	</select>
+ 	
+ 	<select id="rCount" parameterType="int">
+ 		select count(*) from review 
+ 	</select>
+ 	
+ 	<select id="sysCount" resultType="int">
+ 		select count(*) from review where DATE_FORMAT(create_date, '%Y-%m-%d') = CURDATE() 	
+ 	</select>
+ 	
+ </mapper>

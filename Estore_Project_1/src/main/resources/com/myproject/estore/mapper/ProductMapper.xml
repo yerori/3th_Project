@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="com.myproject.estore.mapper.ProductMapper">
+ 
+ 	<!-- 리스트 -->
+ 	<select id="pList" resultType="com.myproject.estore.dto.ProductDTO">
+ 		select * from product where ptype like CONCAT('%',#{word},'%')
+ 	</select> 	
+ 	
+ 	<!-- 검색리스트 -->
+ 	<select id="searchList" resultType="com.myproject.estore.dto.ProductDTO">
+ 		select * from product where pname like CONCAT('%',#{word},'%')
+ 	</select>
+ 	
+ 	<!-- 삭제 -->
+ 	<delete id="pDelete" parameterType="long">
+ 		delete from product where pnum=#{pnum}
+ 	</delete>
+ 
+ </mapper>

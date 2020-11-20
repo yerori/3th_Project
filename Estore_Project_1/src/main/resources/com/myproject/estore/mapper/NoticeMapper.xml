@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="com.myproject.estore.mapper.NoticeMapper">
+ 
+ <select id="nList" resultType="com.myproject.estore.dto.NoticeDTO">
+ 	select * from notice
+ </select>
+ 
+ <select id="plusCnt" parameterType="int">
+ 	update notice set hitcount = hitcount+1 where nnum=#{nnum}
+ </select>
+ 
+ <select id="nfindByNum" parameterType="int" resultType="com.myproject.estore.dto.NoticeDTO">
+ 	select * from notice where nnum=#{nnum}
+ </select>
+ 
+ <delete id="nDelete" parameterType="int">
+ 	delete from notice where nnum=#{nnum} 
+ </delete>
+ 
+ <update id="nUpdate" parameterType="com.myproject.estore.dto.NoticeDTO">
+	update notice set title=#{title}, content=#{content}, nimg=#{nimg} where nnum=#{nnum}
+ </update>
+ </mapper>
