@@ -28,7 +28,6 @@ import com.myproject.estore.mapper.OrderMapper;
 import com.myproject.estore.service.AdminService;
 import com.myproject.estore.service.ContactService;
 import com.myproject.estore.service.OrderService;
-import com.myproject.estore.service.ProductService;
 import com.myproject.estore.service.QnAService;
 import com.myproject.estore.service.ReviewService;
 import com.myproject.estore.service.ShopService;
@@ -55,9 +54,6 @@ public class AdminController {
 	
 	@Autowired
 	private ShopService sService;
-	
-	@Autowired
-	private ProductService pService;
 	
 	@Autowired
 	private ContactService cService;
@@ -391,14 +387,6 @@ public class AdminController {
 	public String delete(int cnum) {
 		cService.cDelete(cnum);
 		return "success";
-	}
-	
-
-	//product delete
-	@GetMapping("productDelete")
-	public String pDelete(Long pnum) {
-		pService.productDelete(pnum);
-		return "redirect:/admin/aProduct";
 	}
 	
 

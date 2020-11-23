@@ -90,37 +90,24 @@ a:hover {
                   </sec:authorize>
                   
                   <sec:authentication property="principal.username" var="userName" />
-                   <sec:authorize access="hasRole('ROLE_MANAGER')"> 
-                    <c:if test="${userName==product.sid}">		 
+                  <sec:authorize access="isAuthenticated()"> 
+                    <c:if test="${userName==product.sid }">		 
 	                  <!-- 판매자만 보이게 -->
 	                  <input type="button" value="수정하기" class="genric-btn success-border radius" 
 	                  onclick="location.href='/product/productUpdate?pnum=${product.pnum}'">
 	                  <input type="button" value="삭제하기" class="genric-btn danger-border radius"
 	                  onclick="location.href='/product/productDelete?pnum=${product.pnum }'">
 	                 </c:if> 
-	                 
-	                 <div>
-
-	                  </div>                  
-	                  
-                  </sec:authorize>
-                  
-              <sec:authorize access="hasRole('ROLE_ADMIN')"> 
+                  </sec:authorize> 
+                   <sec:authorize access="isAuthenticated()"> 
                     <c:if test="${userName=='admin@admin.com' }">		 
 	                  <!-- 판매자만 보이게 -->
+	                  <input type="button" value="수정하기" class="genric-btn success-border radius" 
+	                  onclick="location.href='/product/productUpdate?pnum=${product.pnum}'">
 	                  <input type="button" value="삭제하기" class="genric-btn danger-border radius"
-	                  onclick="location.href='/admin/productDelete?pnum=${product.pnum }'">
+	                  onclick="location.href='/product/productDelete?pnum=${product.pnum }'">
 	                 </c:if> 
-	                 
-	                 <div>
-
-	                  </div>                  
-	                  
-                  </sec:authorize>  
-                  
-                  
-                  
-                  
+                  </sec:authorize>     
                  </sec:authorize>            
               </div>
             </div>

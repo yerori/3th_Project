@@ -68,9 +68,6 @@
                     <div class="blog_right_sidebar">
                         <aside class="single_sidebar_widget search_widget">
                             <div class="form-group">
-                         	   <div class="input-group mb-3">
-                                    <h3>Review</h3>
-                                 </div>
                               <div class="input-group mb-3">
 								<h4>Today New Review: ${todayReview }</h4>
 								</div>

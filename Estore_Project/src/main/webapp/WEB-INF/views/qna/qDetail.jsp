@@ -89,7 +89,7 @@ function adelete(qnum){
 		</sec:authorize>			
 	</div>
 	<br><br><br><br>
-	<sec:authorize access="hasRole('ROLE_MANAGER') and hasRole('ROLE_ADMIN')and isAuthenticated()">
+	<sec:authorize access="hasRole('ROLE_MANAGER') and isAuthenticated()">
 	<div class="billing_details" id="writearea" align="center">
 		<div class="col-lg-8" align="left">
 			<h3>Write Comment</h3>
