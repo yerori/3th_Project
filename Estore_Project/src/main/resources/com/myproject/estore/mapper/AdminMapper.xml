@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="com.myproject.estore.mapper.AdminMapper">
+ <!-- 리뷰 리스트 -->
+    <resultMap type="com.myproject.estore.dto.ProductDTO" id="product">
+      <id property="pnum" column="pnum" />
+      <result property="pname" column="pname" />
+   </resultMap>
+ 
+    <resultMap type="com.myproject.estore.dto.ReviewDTO" id="review">
+     <result property="rnum" column="rnum" />
+     <result property="pnum" column="pnum" />
+     <result property="title" column="title" />
+     <result property="content" column="content" />
+     <result property="create_date" column="create_date" />      <result property="email" column="email" />  
+     <result property="rate" column="rate" />
+     <result property="sid" column="sid" />
+     <result property="onum" column="onum" />
+   </resultMap>
+   
+   <select id="rList" resultMap="review">
+   	select r.*, p.pname 
+   	from review r left join product p
+   	on r.pnum=p.pnum
+   </select>
+
+ 
+ 
+    <!--가게 검색, 페이징 -->
+   <sql id="sSearch"> 
+	
+      	<if test='word!=null and field=="sname"'>
+		 and	sname like CONCAT('%',#{word},'%') 
+		</if>
+		<if test='word!=null and field=="email"'>
+	     and		email like CONCAT('%',#{word},'%') 
+		</if>	
+   </sql> 
+   
+   <!-- 리스트 -->
+   <select id="sList"  resultType="com.myproject.estore.dto.Shop" parameterType="HashMap">
+   	select bb.* from (select @rownum:=@rownum+1 as rn, aa.* 
+   		from (select * from shop where 
+		(@rownum:=0)=0 <include refid="sSearch"/>) aa limit #{endRow}) bb 
+		where rn >=#{startRow}
+	</select>
+	
+   <!-- count -->   
+   <select id="sCount" resultType="int">
+    select count(*) from shop 
+     <where>
+    	 <if test='word!=null and field=="sname"'>
+		 sname like CONCAT('%',#{word},'%') 
+		</if>
+		<if test='word!=null and field=="email"'>
+	      email like CONCAT('%',#{word},'%') 
+		</if>
+     </where>
+   </select>
+   
+   
+   <!-- 주문 검색 리스트 -->
+      <!--주문 검색, 페이징 -->
+   <sql id="osearch">  	
+      	<if test='word!=null and field=="name"'>
+				name like CONCAT('%',#{word},'%') and
+		</if>
+		<if test='word!=null and field=="uid"'>
+			userid like CONCAT('%',#{word},'%') and
+		</if>   	
+   </sql>   
+   
+   <!-- 주문리스트 -->
+   <select id="oList" resultType="com.myproject.estore.dto.OrderDTO" parameterType="HashMap">
+   		select bb.* from 
+		(select @rownum:=@rownum+1 as rn, aa.* from 
+		(select onum, ordernum, sid, name, userid, count(pcount) sum, sum(price) total, price, create_date, orderstate
+		 from ordering where <include refid="osearch"/>
+		 (@rownum:=0)=0 group by ordernum, sid) aa limit #{endRow}) bb 
+		where rn >=#{startRow}
+
+   </select>
+   
+   <!-- 주문 count -->
+   <select id="oCount" resultType="int">
+   	 select count(DISTINCT ordernum, sid) from ordering 
+     <where>
+    	 <if test='word!=null and field=="name"'>
+		 name like CONCAT('%',#{word},'%') 
+		</if>
+		<if test='word!=null and field=="email"'>
+	      userid like CONCAT('%',#{word},'%') 
+		</if>
+     </where>
+   		
+   </select>   
+       <!--유저 검색, 페이징 -->
+   <sql id="uSearch"> 
+   
+         <if test='word!=null and field=="name"'>
+       and name like CONCAT('%',#{word},'%') 
+      </if>
+      <if test='word!=null and field=="email"'>
+        and email like CONCAT('%',#{word},'%') 
+      </if>   
+   </sql> 
+   
+   <!-- 리스트 -->
+   <select id="uList"  resultType="com.myproject.estore.dto.User" parameterType="HashMap">
+      select bb.* from (select @rownum:=@rownum+1 as rn, aa.* 
+         from (select * from user where 
+      (@rownum:=0)=0 and email not like '%admin%'<include refid="uSearch"/>) aa limit #{endRow}) bb 
+      where rn >=#{startRow}
+   </select>
+   
+   <!-- count -->   
+   <select id="uCount" resultType="int">
+    select count(*) from user where email not like '%admin%'
+     
+        <if test='word!=null and field=="name"'>
+        and name like CONCAT('%',#{word},'%') 
+      </if>
+      <if test='word!=null and field=="email"'>
+         and email like CONCAT('%',#{word},'%') 
+      </if>
+     
+   </select>
+     <!-- 제품 -->
+    <!-- 제품 검색, 페이징 -->
+      <sql id="psearch">  	
+      	<if test='word!=null and field=="sname"'>
+			sname like CONCAT('%',#{word},'%') and
+		</if>
+		<if test='word!=null and field=="pname"'>
+			pname like CONCAT('%',#{word},'%') and
+		</if>   	
+   </sql>  
+    <!-- 리스트 -->
+   <select id="aPlist"  resultType="com.myproject.estore.dto.ProductDTO" parameterType="HashMap">
+   	select bb.* from (select @rownum:=@rownum+1 as rn, aa.* 
+   		from (select * from product where  <include refid="psearch"/>
+		(@rownum:=0)=0) aa limit #{endRow}) bb 
+		where rn >=#{startRow}
+	</select>
+   <!-- count -->   
+   <select id="aPcount" resultType="int">
+    select count(*) from product       	
+        <if test='word!=null and field=="sname"'>
+			where sname like CONCAT('%',#{word},'%')
+		</if>
+		<if test='word!=null and field=="pname"'>
+			where pname like CONCAT('%',#{word},'%')
+		</if> 
+   </select>
+ 
+ </mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="com.myproject.estore.mapper.ContactMapper">
+ 	
+ 	<select id="cList" resultType="com.myproject.estore.dto.ContactDTO">
+ 		select * from contact
+ 	</select>
+   	
+   	<update id="cUpdate" parameterType="com.myproject.estore.dto.ContactDTO">
+   		update contact set contact=#{contact}, name=#{name}, email=#{email}, title=#{title} where cnum=#{cnum}
+   	</update>
+
+    <delete id="cDelete" parameterType="int">
+       delete from contact where cnum=#{cnum}
+    </delete>
+    
+    <select id="cfindByNum" resultType="com.myproject.estore.dto.ContactDTO">
+    	select * from contact where cnum=#{cnum}
+    </select>
+ 	
+ </mapper>

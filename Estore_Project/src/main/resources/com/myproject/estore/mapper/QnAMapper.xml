@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="com.myproject.estore.mapper.QnAMapper">
+ 
+ <select id="qList"	resultType="com.myproject.estore.dto.QnADTO" >
+ 	select * from QnA
+ </select>
+ 
+ <select id="qDetail" parameterType="int" resultType="com.myproject.estore.dto.QnADTO">
+ 	select * from QnA where qnum=#{qnum}
+ </select>
+ 
+ <select id="qfindByPnum" parameterType="int" resultType="com.myproject.estore.dto.QnADTO">
+ 	select * from QnA where pnum=#{pnum}
+ </select>
+ 
+ <update id="qUpdate" parameterType="com.myproject.estore.dto.QnADTO">
+ 	update QnA set title=#{title}, content=#{content} where qnum=#{qnum}
+ </update>
+ 
+ <update id="ReplayCnt" parameterType="int">
+ 	update QnA set replycnt = replycnt+#{cnt} where qnum=#{qnum}
+ </update>
+ 
+ 
+ <delete id="qDelete" parameterType="int">
+ 	delete from QnA where qnum=#{qnum}
+ </delete>
+ </mapper>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="com.myproject.estore.mapper.ShopMapper">
+ 	<resultMap type="com.myproject.estore.dto.ReviewDTO" id="review">
+ 		<result property="rnum" column="rnum"></result>
+ 		<result property="pnum" column="pnum"></result>
+ 		<result property="title" column="title"></result>
+ 		<result property="content" column="content"></result>
+ 		<result property="email" column="email"></result>
+ 		<result property="rate" column="rate"></result> 	
+ 		<result property="create_date" column="create_date"></result> 
+ 		<result property="onum" column="onum"></result> 
+ 		<result property="sid" column="sid"></result> 
+ 	</resultMap>
+ 	
+  	<resultMap type="com.myproject.estore.dto.ProductDTO" id="product">
+ 	    <id property="pnum" column="pnum" />
+ 	    <result property="pname" column="pname" /> 
+ 		<result property="sid" column="sid" /> 	
+ 	</resultMap> 
+ 	
+ 	<select id="sRList" resultType="int">
+ 		select count(*)
+ 		from review r left join product p
+ 		on r.pnum=p.pnum
+ 		where r.sid=#{sid}
+ 	</select> 
+ 	
+ 	<select id="sRlist" resultMap="review">
+ 		select r.*, p.pname
+ 		from review r left join product p
+ 		on r.pnum=p.pnum
+ 		where r.sid=#{sid}
+ 	</select>
+ 	
+  <resultMap type="com.myproject.estore.dto.QnADTO" id="qna">
+      <result property="qnum" column="qnum" />
+      <result property="pnum" column="pnum" />
+      <result property="title" column="title" />
+      <result property="content" column="content" />
+      <result property="create_date" column="create_date" />
+      <result property="email" column="email" />  
+      <result property="replyCnt" column="replyCnt" />
+   </resultMap>
+   
+
+   <!--주문 검색, 페이징 -->
+   <sql id="search">  	
+      	<if test='word!=null and field=="name"'>
+			and	name like CONCAT('%',#{word},'%')
+		</if>
+		<if test='word!=null and field=="uid"'>
+			and	userid like CONCAT('%',#{word},'%')
+		</if>   	
+   </sql>   
+   
+   <!-- 주문리스트 -->
+   <select id="sOList" resultType="com.myproject.estore.dto.OrderDTO" parameterType="HashMap">
+   		select bb.* from 
+		(select @rownum:=@rownum+1 as rn, aa.* from 
+		(select ordernum, name, userid, count(pcount) sum, sum(price) total, price, create_date, orderstate
+		 from ordering where sid=#{sid} <include refid="search"/>
+		and (@rownum:=0)=0 group by ordernum) aa limit #{endRow}) bb 
+		where rn >=#{startRow}
+
+   </select>
+   
+   <!-- 주문 count -->
+   <select id="oCount" resultType="int">
+   		select count(DISTINCT ordernum) from ordering where sid=#{sid} <include refid="search"/>
+   		
+   </select>   
+   
+   
+   <!-- 제품 검색, 페이징 -->
+      <sql id="psearch">  	
+      	<if test='word!=null and field=="pname"'>
+			and	pname like CONCAT('%',#{word},'%')
+		</if>
+		<if test='word!=null and field=="ptype"'>
+			and	ptype like CONCAT('%',#{word},'%')
+		</if>   	
+   </sql>   
+   
+   <!-- 리스트 -->
+   <select id="sPList"  resultType="com.myproject.estore.dto.ProductDTO" parameterType="HashMap">
+   	select bb.* from (select @rownum:=@rownum+1 as rn, aa.* 
+   		from (select * from product where sid=#{sid} <include refid="psearch"/>
+		and (@rownum:=0)=0) aa limit #{endRow}) bb 
+		where rn >=#{startRow}
+	</select>
+   <!-- count -->   
+   <select id="pCount" resultType="int">
+    select count(*) from product where sid=#{sid} <include refid="psearch"/>
+   </select>
+   
+   <!-- q리스트 -->
+   <select id="sQList" resultMap="qna">
+      select q.qnum, q.pnum, q.title, q.content, q.create_date, q.email, q.replyCnt,
+      p.pname, p.sid
+      from qna q left join product p
+      on q.pnum=p.pnum
+      where sid=#{sid}
+   </select>
+ 
+ <!-- 오늘 q개수 -->
+   <select id="todayQlist" resultType="int">
+    select count(*)
+      from qna q left join product p
+      on q.pnum=p.pnum
+      where sid=#{sid} and DATE_FORMAT(q.create_date, "%Y-%m-%d") = CURDATE() 
+   </select>
+ 	
+ 	<!-- 댓글 수 0 -->
+	<select id="noReply" resultType="int">
+		select ifnull(count(*),0) count
+		from qna q left join product p
+		on q.pnum=p.pnum
+		where sid=#{sid} and replyCnt=0
+	</select>
+ </mapper>
