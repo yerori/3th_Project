@@ -4,7 +4,7 @@
 비전공자 교육 이수 동안 기록을 담아 보았습니다.<br>
 잘 부탁드리겠습니다. 😄
 
-I am Yelee Kang who is looking for a web developer in South Korea.
+I am Yelee Kang who is looking for a web developer in South Korea. <br>
 If you want to contact me, please leave me a message!
 
 <!--
