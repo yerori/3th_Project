@@ -1,6 +1,6 @@
 ### Hi there! I'm yelee👋
 안녕하세요! 신입 웹개발자 강예리입니다. <br>
-비전공자 교육 이수 중, Eclipse과 Oracle을 연동한 프로젝트입니다.<br>
+비전공자 교육 이수 중, Spring framework과 MYSQL을 연동한 프로젝트입니다.<br>
 잘 부탁드리겠습니다. 😄
 
 I am Yelee Kang who is looking for a web developer in South Korea. <br>
